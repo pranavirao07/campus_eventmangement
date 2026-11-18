@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>CampusEvents</title>
+<style>
+:root{color-scheme:light;--bg:#f6f4ee;--sf:#fff;--tx:#1d211c;--mu:#6b6f66;--br:#e3e0d5;--pr:#1f4d3a;--pr2:#1f4d3a;--ok:#1f4d3a;--er:#8a5a00;--chip:#e4ebe0;--on:#fff;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#171a16;--sf:#1f231d;--tx:#eef0e8;--mu:#a3a89b;--br:#323829;--pr:#8fb996;--pr2:#8fb996;--ok:#a8d5b0;--er:#e3bd6a;--chip:#2a3326;--on:#14201a}}
+:root[data-theme="dark"]{--bg:#171a16;--sf:#1f231d;--tx:#eef0e8;--mu:#a3a89b;--br:#323829;--pr:#8fb996;--pr2:#8fb996;--ok:#a8d5b0;--er:#e3bd6a;--chip:#2a3326;--on:#14201a}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--pr);z-index:10}
+.wrap{max-width:1050px;margin:0 auto;padding:18px}
+header{position:sticky;top:env(safe-area-inset-top,0px);background:var(--pr);border-bottom:0;z-index:9}
+header .wrap{display:flex;align-items:center;gap:10px;padding-top:10px;padding-bottom:10px;flex-wrap:wrap}
+.brand{font-weight:800;font-size:19px;margin-right:auto}
+.brand span{color:#fff}header .mu{color:#fff}header .tab{color:#cfe0d3}header .tab.on{background:rgba(255,255,255,.18);color:#fff}header .btn.o{color:#fff;border-color:rgba(255,255,255,.6)}
+.tab{background:none;border:0;color:var(--mu);font:inherit;font-weight:600;padding:7px 12px;border-radius:99px;cursor:pointer}
+.tab.on{background:var(--chip);color:var(--pr)}
+.btn{background:var(--pr);color:var(--on);border:0;border-radius:10px;padding:10px 16px;font:inherit;font-weight:600;cursor:pointer}
+.btn.o{background:none;color:var(--pr);border:1px solid var(--pr)}
+.btn.d{background:none;color:var(--er);border:1px solid var(--er);padding:5px 10px;font-size:13px}
+.btn.w{width:100%}
+input,select,textarea{width:100%;padding:10px 12px;margin:4px 0 10px;border:1px solid var(--br);border-radius:10px;background:var(--bg);color:var(--tx);font:inherit}
+label{font-size:13px;font-weight:600;color:var(--mu)}
+.card{background:var(--sf);border:1px solid var(--br);border-radius:16px;overflow:hidden}
+.pad{padding:18px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:16px}
+.ban{display:flex;align-items:center;justify-content:center;font-size:44px;font-weight:800;color:rgba(255,255,255,.25)}
+.ev{cursor:pointer;transition:transform .15s}.ev:hover{transform:translateY(-3px)}
+.chip{display:inline-block;background:var(--chip);color:var(--pr);border-radius:99px;padding:3px 10px;font-size:12px;font-weight:700}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0 18px}
+.chips button{border:1px solid var(--br);background:var(--sf);color:var(--tx);border-radius:99px;padding:6px 14px;cursor:pointer;font:inherit;font-size:13px}
+.chips button.on{background:var(--pr);color:var(--on);border-color:var(--pr)}
+.mu{color:var(--mu);font-size:13px}
+.hero{background:var(--pr);color:#fff;border-radius:18px;padding:28px 22px;margin-bottom:6px}
+.hero h1{margin:0 0 4px;font-size:26px}
+.auth{display:grid;grid-template-columns:1fr 1fr;min-height:100vh;min-height:100dvh}
+.aside{background:var(--pr);color:var(--on);padding:48px 36px;display:flex;flex-direction:column;justify-content:center}
+.aside h1{font-size:34px;margin:0 0 10px}
+.aside li{margin:8px 0}
+.aform{padding:36px;display:flex;align-items:center;justify-content:center}
+.aform>div{width:100%;max-width:380px}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:0 10px}
+.msg{padding:10px 12px;border-radius:10px;margin-bottom:10px;font-size:14px}
+.ok{background:var(--chip);color:var(--ok)}
+.er{background:color-mix(in srgb,var(--er) 18%,transparent);color:var(--er)}
+.sc{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--br);white-space:nowrap}
+th{color:var(--mu);font-size:12px;text-transform:uppercase}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px}
+.stats b{font-size:26px;display:block}
+.two{display:grid;grid-template-columns:3fr 2fr;gap:16px}
+.back{background:none;border:0;color:var(--pr);cursor:pointer;font:inherit;font-weight:600;padding:0 0 10px}
+h2,h3{margin:0 0 8px}
+@media(max-width:760px){.auth,.two{grid-template-columns:1fr}.aside{padding:28px 22px}.aform{padding:22px 18px}.stats{grid-template-columns:1fr 1fr 1fr}}
+</style></head>
+<body><div id="app"></div>
+<script>
+const mem={};
+const st={get(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):(k in mem?mem[k]:d)}catch(e){return k in mem?mem[k]:d}},
+set(k,v){mem[k]=v;try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+const ss={get(){try{return sessionStorage.getItem('ce_user')}catch(e){return mem.s||null}},set(v){mem.s=v;try{v?sessionStorage.setItem('ce_user',v):sessionStorage.removeItem('ce_user')}catch(e){}}};
+const CAT={Technical:['💻','#6d28d9,#2563eb'],Cultural:['🎭','#db2777,#f59e0b'],Sports:['🏏','#059669,#0ea5e9'],Workshop:['🛠️','#ea580c,#db2777'],Seminar:['🎤','#0891b2,#6d28d9'],Other:['✨','#4b5563,#6d28d9']};
+const SEED=[
+{id:1,title:'TechFest 2026',category:'Technical',date:'2026-12-05',time:'10:00',venue:'Main Auditorium',desc:'Hackathon, coding contests and tech talks by industry experts.'},
+{id:2,title:'Cultural Night',category:'Cultural',date:'2026-12-12',time:'18:00',venue:'Open Air Theatre',desc:'Music, dance and drama performances by students.'},
+{id:3,title:'Inter-College Cricket',category:'Sports',date:'2026-12-18',time:'09:00',venue:'College Ground',desc:'Knockout cricket tournament with 16 college teams.'},
+{id:4,title:'AI Workshop',category:'Workshop',date:'2027-01-08',time:'11:00',venue:'Seminar Hall 2',desc:'Hands-on workshop on machine learning basics.'},
+{id:5,title:'Career Guidance Talk',category:'Seminar',date:'2027-01-15',time:'14:00',venue:'Conference Room',desc:'Alumni share tips on placements and higher studies.'}];
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const fd=d=>new Date(d+'T00:00').toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'});
+async function hash(s){try{const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(s));return[...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('')}catch(e){return btoa(s)}}
+const users=()=>st.get('ce_users',[]),events=()=>st.get('ce_events',SEED),regs=()=>st.get('ce_regs',[]);
+let U=null,view='events',cur=null,tab='register',q='',cat='All',note='';
+const $=s=>document.querySelector(s);
+const PAL={Technical:'#1f4d3a',Cultural:'#7a4a1d',Sports:'#5c5a1a',Workshop:'#3b4d2a',Seminar:'#5a3d2b',Other:'#3a4038'};
+const ban=(e,h)=>`<div class="ban" style="height:${h}px;background:${PAL[e.category]||PAL.Other}">${esc((e.category||'O')[0])}</div>`;
+
+async function init(){
+  if(!users().some(u=>u.role==='admin')){const u=users();u.push({name:'Administrator',email:'admin@campus.edu',phone:'',dept:'Admin',role:'admin',pw:await hash('admin123')});st.set('ce_users',u)}
+  if(!localStorage.getItem('ce_events'))st.set('ce_events',SEED);
+  const e=ss.get();U=users().find(u=>u.email===e)||null;render();
+}
+function render(){U?shell():authView()}
+
+function authView(){
+  const reg=tab==='register';
+  $('#app').innerHTML=`<div class="auth"><div class="aside"><h1>CampusEvents</h1><p>Your one place for everything happening on campus.</p>
+  <ul><li>Create your free account first</li><li>Browse events and filter by category</li><li>Register in one click</li></ul></div>
+  <div class="aform"><div><h2>${reg?'Create your account':'Welcome back'}</h2>
+  <p class="mu">${reg?'Register once to explore and join events.':'Log in to continue.'}</p>
+  <div class="chips"><button class="${reg?'on':''}" data-a="tab" data-v="register">Register</button><button class="${reg?'':'on'}" data-a="tab" data-v="login">Login</button></div>
+  ${note?`<div class="msg ${note[0]==='!'?'er':'ok'}">${esc(/^[!+]/.test(note)?note.slice(1):note)}</div>`:''}
+  <form data-f="${tab}">
+  ${reg?`<label>Full name</label><input name="name" required minlength="2">
+  <div class="row"><div><label>Phone</label><input name="phone" required pattern="[0-9]{10}" placeholder="10 digits"></div><div><label>Department</label><input name="dept" required></div></div>`:''}
+  <label>Email</label><input name="email" type="email" required>
+  <label>Password</label><input name="pw" type="password" required minlength="6" placeholder="Min. 6 characters">
+  ${reg?`<label>Confirm password</label><input name="pw2" type="password" required>`:''}
+  <button class="btn w">${reg?'Create account':'Login'}</button></form>
+  ${reg?'':'<p class="mu">Admin demo: admin@campus.edu / admin123</p>'}</div></div></div>`;
+}
+
+function shell(){
+  const adm=U.role==='admin';
+  $('#app').innerHTML=`<header><div class="wrap"><div class="brand"><span>CampusEvents</span></div>
+  <button class="tab ${view==='events'||view==='event'?'on':''}" data-a="nav" data-v="events">Events</button>
+  <button class="tab ${view==='mine'?'on':''}" data-a="nav" data-v="mine">My registrations</button>
+  ${adm?`<button class="tab ${view==='admin'?'on':''}" data-a="nav" data-v="admin">Admin</button>`:''}
+  <span class="mu">Hi, ${esc(U.name.split(' ')[0])}</span><button class="btn o" data-a="logout">Logout</button></div></header>
+  <div class="wrap" id="main"></div>`;
+  ({events:evList,event:evDetail,mine:mine,admin:admin})[view]();
+}
+
+function evList(){
+  $('#main').innerHTML=`<div class="hero"><h1>Upcoming events</h1><div>Find something you love and register in one click.</div></div>
+  <div class="chips">${['All',...Object.keys(CAT)].map(c=>`<button class="${cat===c?'on':''}" data-a="cat" data-v="${c}">${c}</button>`).join('')}</div>
+  <input id="q" placeholder="Search by name or venue" value="${esc(q)}"><div class="grid" id="grid"></div>`;
+  grid();
+}
+function grid(){
+  const r=regs().filter(x=>x.email===U.email).map(x=>x.eventId);
+  const l=events().filter(e=>(cat==='All'||e.category===cat)&&(e.title+e.venue+e.desc).toLowerCase().includes(q.toLowerCase())).sort((a,b)=>a.date.localeCompare(b.date));
+  $('#grid').innerHTML=l.length?l.map(e=>`<div class="card ev" data-a="open" data-v="${e.id}">${ban(e,110)}<div class="pad">
+  <span class="chip">${esc(e.category)}</span> ${r.includes(e.id)?'<span class="chip" style="background:none;color:var(--ok)">✓ Registered</span>':''}
+  <h3 style="margin-top:8px">${esc(e.title)}</h3><div class="mu">${fd(e.date)} · ${esc(e.time)}<br>${esc(e.venue)}</div></div></div>`).join(''):'<p class="mu">No events found.</p>';
+}
+
+function evDetail(){
+  const e=events().find(x=>x.id===cur);if(!e){view='events';return evList()}
+  const all=regs().filter(x=>x.eventId===e.id),mine=all.find(x=>x.email===U.email);
+  $('#main').innerHTML=`<button class="back" data-a="nav" data-v="events">← All events</button>
+  <div class="two"><div class="card">${ban(e,170)}<div class="pad"><span class="chip">${esc(e.category)}</span><h2 style="margin-top:8px">${esc(e.title)}</h2>
+  <p><b>${fd(e.date)}</b> · <b>${esc(e.time)}</b><br><b>${esc(e.venue)}</b></p><p>${esc(e.desc)}</p></div></div>
+  <div class="card pad"><h3>Registration</h3>${note?`<div class="msg ${note[0]==='!'?'er':'ok'}">${esc(/^[!+]/.test(note)?note.slice(1):note)}</div>`:''}
+  ${mine?`<div class="msg ok">You’re registered for this event.</div><button class="btn d" data-a="cancel" data-v="${e.id}">Cancel registration</button>`:
+  `<form data-f="join"><label>Name</label><input name="name" value="${esc(U.name)}" required>
+  <label>Email</label><input value="${esc(U.email)}" readonly><label>Phone</label><input name="phone" value="${esc(U.phone)}" required pattern="[0-9]{10}">
+  <label>Department</label><input name="dept" value="${esc(U.dept)}" required><button class="btn w">Register now</button></form>`}</div></div>
+  <div class="card pad" style="margin-top:16px"><h3>Registered participants (${all.length})</h3><div class="sc"><table><thead><tr><th>#</th><th>Name</th><th>Department</th><th>Date</th></tr></thead><tbody>
+  ${all.map((x,i)=>`<tr><td>${i+1}</td><td>${esc(x.name)}</td><td>${esc(x.dept)}</td><td>${esc(x.on)}</td></tr>`).join('')||'<tr><td colspan="4" class="mu">No registrations yet. Be the first!</td></tr>'}</tbody></table></div></div>`;
+  note='';
+}
+
+function mine(){
+  const ev=events(),l=regs().filter(x=>x.email===U.email);
+  $('#main').innerHTML=`<h2>My registrations</h2><div class="grid">${l.map(r=>{const e=ev.find(x=>x.id===r.eventId);return e?`<div class="card ev" data-a="open" data-v="${e.id}">${ban(e,80)}<div class="pad"><h3>${esc(e.title)}</h3><div class="mu">${fd(e.date)} · ${esc(e.venue)}</div></div></div>`:''}).join('')||'<p class="mu">You haven’t registered for any event yet.</p>'}</div>`;
+}
+
+function admin(){
+  const ev=events(),rg=regs();
+  $('#main').innerHTML=`<h2>Admin dashboard</h2><div class="stats"><div class="card pad"><b>${ev.length}</b><span class="mu">Events</span></div><div class="card pad"><b>${rg.length}</b><span class="mu">Registrations</span></div><div class="card pad"><b>${users().filter(u=>u.role!=='admin').length}</b><span class="mu">Users</span></div></div>
+  <div class="two"><div class="card pad"><h3>Events</h3><div class="sc"><table><thead><tr><th>Title</th><th>Date</th><th>Reg.</th><th></th></tr></thead><tbody>
+  ${ev.map(e=>`<tr><td>${esc(e.title)}</td><td>${fd(e.date)}</td><td>${rg.filter(r=>r.eventId===e.id).length}</td><td><button class="btn d" data-a="del" data-v="${e.id}">Delete</button></td></tr>`).join('')}</tbody></table></div></div>
+  <div class="card pad"><h3>Add event</h3><form data-f="add"><input name="title" placeholder="Title" required>
+  <select name="category">${Object.keys(CAT).map(c=>`<option>${c}</option>`).join('')}</select>
+  <div class="row"><input name="date" type="date" required><input name="time" type="time" required></div>
+  <input name="venue" placeholder="Venue" required><textarea name="desc" rows="3" placeholder="Description" required></textarea><button class="btn w">Add event</button></form></div></div>
+  <div class="card pad" style="margin-top:16px"><h3>All registrations</h3><div class="sc"><table><thead><tr><th>Event</th><th>Name</th><th>Email</th><th>Phone</th><th>Dept</th></tr></thead><tbody>
+  ${rg.map(r=>{const e=ev.find(x=>x.id===r.eventId);return`<tr><td>${e?esc(e.title):'-'}</td><td>${esc(r.name)}</td><td>${esc(r.email)}</td><td>${esc(r.phone)}</td><td>${esc(r.dept)}</td></tr>`}).join('')||'<tr><td colspan="5" class="mu">None yet.</td></tr>'}</tbody></table></div></div>`;
+}
+
+document.addEventListener('click',e=>{
+  const b=e.target.closest('[data-a]');if(!b)return;const a=b.dataset.a,v=b.dataset.v;
+  if(a==='tab'){tab=v;note='';authView()}
+  else if(a==='nav'){view=v;note='';render()}
+  else if(a==='cat'){cat=v;evList()}
+  else if(a==='open'){cur=+v;view='event';note='';render()}
+  else if(a==='logout'){ss.set(null);U=null;tab='login';note='';render()}
+  else if(a==='cancel'){st.set('ce_regs',regs().filter(r=>!(r.eventId===+v&&r.email===U.email)));note='!Registration cancelled.';evDetail()}
+  else if(a==='del'){if(confirm('Delete this event and its registrations?')){st.set('ce_events',events().filter(x=>x.id!==+v));st.set('ce_regs',regs().filter(r=>r.eventId!==+v));admin()}}
+});
+document.addEventListener('input',e=>{if(e.target.id==='q'){q=e.target.value;grid()}});
+document.addEventListener('submit',async e=>{
+  e.preventDefault();const f=e.target,t=f.dataset.f,d=Object.fromEntries(new FormData(f));
+  if(t==='register'){
+    d.email=d.email.trim().toLowerCase();
+    if(d.pw!==d.pw2){note='!Passwords do not match.';return authView()}
+    if(users().some(u=>u.email===d.email)){note='!This email is already registered. Please log in.';return authView()}
+    const l=users();l.push({name:d.name.trim(),email:d.email,phone:d.phone,dept:d.dept,role:'user',pw:await hash(d.pw)});st.set('ce_users',l);
+    tab='login';note='Account created! Please log in.';authView();
+  }else if(t==='login'){
+    const u=users().find(x=>x.email===d.email.trim().toLowerCase());
+    if(!u||u.pw!==await hash(d.pw)){note='!Wrong email or password.';return authView()}
+    U=u;ss.set(u.email);view='events';note='';render();
+  }else if(t==='join'){
+    const l=regs();l.push({id:Date.now(),eventId:cur,email:U.email,name:d.name,phone:d.phone,dept:d.dept,on:new Date().toLocaleString('en-IN')});
+    st.set('ce_regs',l);note='Registration successful! See you at the event.';evDetail();
+  }else if(t==='add'){
+    const l=events();l.push({id:Date.now(),...d});st.set('ce_events',l);admin();
+  }
+});
+init();
+</script></body></html>
